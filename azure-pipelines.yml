@@ -7,7 +7,7 @@ trigger:
 - main
 
 pool:
-  vmImage: ubuntu-18.04
+  vmImage: ubuntu-Latest
 
 steps:
 - task: Maven@4
@@ -15,6 +15,15 @@ steps:
   inputs:
     mavenPomFile: 'pom.xml'
     options: '-DskipITs --settings ./maven/settings.xml'
+    publishJUnitResults: true
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    testRunTitle: 'test run'
+    codeCoverageToolOption: 'Cobertura'
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: false
 
 - task: CopyFiles@2
   displayName: 'Copy Files'
